@@ -1,6 +1,5 @@
-// src/pages/Register.js
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { register } from '../services/api';
 
 const Register = () => {
@@ -10,7 +9,7 @@ const Register = () => {
     email: '',
     password: '',
   });
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { firstName, lastName, email, password } = formData;
 
@@ -20,7 +19,7 @@ const Register = () => {
     e.preventDefault();
     try {
       await register(formData);
-      history.push('/login');
+      navigate('/login');
     } catch (error) {
       console.error(error.response.data);
     }

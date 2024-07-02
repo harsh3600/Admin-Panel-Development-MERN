@@ -1,7 +1,8 @@
 // src/pages/Login.js
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { loginUser } from '../store/actions';
+import { loginUser } from '../store/action';
+
 
 const Login = () => {
   const [email, setEmail] = useState('');
