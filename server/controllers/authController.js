@@ -2,10 +2,24 @@
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+// controllers/authController.js
+const Joi = require('joi');
+
+const registerSchema = Joi.object({
+  firstName: Joi.string().required(),
+  lastName: Joi.string().required(),
+  email: Joi.string().email().required(),
+  password: Joi.string().min(6).required(),
+});
+
+
 
 exports.register = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
   try {
+    const { error } = registerSchema.validate(req.body);
+    if (error) return res.status(400).json({ message: error.details[0].message });
+  
     let user = await User.findOne({ email });
     if (user) return res.status(400).json({ message: 'User already exists' });
 
@@ -32,11 +46,24 @@ exports.login = async (req, res) => {
     if (!isMatch) return res.status(400).json({ message: 'Invalid Credentials' });
 
     const payload = { userId: user.id };
-    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '100h' });
 
-    res.status(200).json({ token });
+    res.status(200).json({role:user.role, token:token });
   } catch (error) {
     res.status(500).json({ message: 'Server Error' });
   }
 };
+
+
+exports.logout = async (req, res) => {
+  
+  try {
+    console.log("working")
+        res.status(200).json({ status:200,
+      message:"Logout successfully" });
+  } catch (error) {
+    res.status(500).json({ message: 'Server Error' });
+  }
+};
+
 

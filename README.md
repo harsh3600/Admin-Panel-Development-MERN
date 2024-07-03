@@ -35,4 +35,21 @@
 - Pagination and search
 - Error handling
 
+## Steps to run
+
+
+- Frontend
+ 1.  cd client 
+ 2. npm i         (only 1 time)
+ 3. npm start
+
+
+
+- Backend
+ 1. cd server 
+ 2. npm i         (only 1 time)
+ 3. npm run dev
+
+
+
 

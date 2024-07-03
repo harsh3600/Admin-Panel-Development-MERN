@@ -1,15 +1,23 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../store/action';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
+  const navigate=useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(loginUser({ email, password }));
+   const result=await dispatch(loginUser({ email, password }));
+   if(result=="User"){
+       navigate("/userlist")
+   }
+   else if(result=="Admin"){
+    navigate("/admin-panel/user-management")
+   }
   };
 
   return (

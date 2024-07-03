@@ -6,14 +6,23 @@ const API = axios.create({
 });
 
 API.interceptors.request.use((req) => {
-  if (localStorage.getItem('token')) {
-    req.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
+  const token = localStorage.getItem('token');
+
+  // Check if token exists and handle missing token scenarios gracefully
+  if (!token) {
+    console.warn('Authorization token not found in localStorage. Request sent without token.');
+  } else {
+    req.headers.Authorization = `Bearer ${token}`;
   }
+
   return req;
 });
 
 export const register = (user) => API.post('/auth/register', user);
 export const login = (user) => API.post('/auth/login', user);
-export const fetchUsers = () => API.get('/users');
-export const updateUser = (id, user) => API.put(`/users/${id}`, user);
-export const deleteUser = (id) => API.delete(`/users/${id}`);
+export const logout = (user) => API.post('/auth/logout', user);
+export const fetchUsers = () => API.post('/users');
+export const updateUser = (id, user) => API.post(`/users/update/${id}`, user);
+export const deleteUser = (id) => API.post(`/users/delete/${id}`);
+export const createUser = (user) => API.post('/users/create', user);
+

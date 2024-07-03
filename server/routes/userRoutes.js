@@ -1,12 +1,22 @@
 // routes/userRoutes.js
 const express = require('express');
-const { getAllUsers, updateUser, deleteUser } = require('../controllers/userController');
+const { getAllUsers, updateUser, deleteUser, createUser } = require('../controllers/userController');
 const { protect, admin } = require('../middleware/authMiddleware');
 const router = express.Router();
 
+// protect, admin, 
+
 router.route('/')
-  .get(protect, admin, getAllUsers)
-  .post(protect, admin, updateUser)
-  .delete(protect, admin, deleteUser);
+   .post( getAllUsers);
+
+router.route('/create')
+   .post( createUser);
+   
+router.route('/update/:id')
+  .post(updateUser)
+
+router.route('/delete/:id')
+  .post( deleteUser)
+
 
 module.exports = router;
