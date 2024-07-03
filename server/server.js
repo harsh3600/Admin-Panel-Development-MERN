@@ -16,9 +16,7 @@ app.use(cors());
 app.use(express.json());
 
 // // Routes
-app.use("/",async (req, res)=>{
-  return res.status(400).json({ message: 'User already exists' });
-})
+
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 
