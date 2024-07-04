@@ -17,7 +17,7 @@ const Navbar = () => {
     <nav className="bg-gray-800 p-4">
     <div className="container mx-auto flex justify-center space-x-4">
       {localStorage.getItem("token")?
-                <button onClick={handlelogout}>Logout</button>:<> <Link to="/login" className="text-white hover:underline">Login</Link>
+                <button onClick={handlelogout } className='text-white'>Logout</button>:<> <Link to="/login" className="text-white hover:underline">Login</Link>
         <Link to="/register" className="text-white hover:underline">Register</Link></> }
      
     </div>

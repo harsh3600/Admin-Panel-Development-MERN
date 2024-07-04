@@ -9,7 +9,8 @@ const registerSchema = Joi.object({
   firstName: Joi.string().required(),
   lastName: Joi.string().required(),
   email: Joi.string().email().required(),
-  password: Joi.string().min(6).required(),
+  password: Joi.string().required(),
+ 
 });
 
 
@@ -17,11 +18,12 @@ const registerSchema = Joi.object({
 exports.register = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
   try {
+    console.log(req.body)
     const { error } = registerSchema.validate(req.body);
     if (error) return res.status(400).json({ message: error.details[0].message });
   
-    let user = await User.findOne({ email });
-    if (user) return res.status(400).json({ message: 'User already exists' });
+    // let user = await User.findOne({ email });
+    // if (user) return res.status(400).json({ message: 'User already exists' });
 
     user = new User({ firstName, lastName, email, password });
     await user.save();
@@ -29,7 +31,7 @@ exports.register = async (req, res) => {
     const payload = { userId: user.id };
     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-    res.status(201).json({ token });
+    res.status(201).json({role:"User", token:token });
   } catch (error) {
     res.status(500).json({ message: 'Server Error' });
   }

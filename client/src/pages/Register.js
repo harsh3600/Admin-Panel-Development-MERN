@@ -7,7 +7,8 @@ const Register = () => {
     firstName: '',
     lastName: '',
     email: '',
-    password: '',
+    password: ''
+   
   });
   const navigate = useNavigate();
 
@@ -18,8 +19,12 @@ const Register = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      await register(formData);
-      navigate('/login');
+      const response=await register(formData);
+      console.log(response)
+      if(response?.
+        statusText
+        == 
+        "Created")navigate('/login');
     } catch (error) {
       console.error(error.response.data);
     }
